@@ -1,24 +1,30 @@
-function [stimulus_pattern  ]= extract_patterns(dataset, num_pulse, neural_latency)
+function [stimulus_patterns spike_patterns] = extract_patterns(dataset, num_pulse_, neural_latency, time_window)
 % extracts all combinations of stimulus patterns of length = num-pulse
-% dataset: data structure from "EPC_TOP80_MU.mat"
+% dataset: a session from from "EPC_TOP80_MU.mat"
 % num_pulse: int, defines pattern length, 1 pulse = 18.75 msec
 % neural_latency: int, extracting spikes witha latency relative to stimuls
 % in miliseconds
+% time_window: [start end] relative to neural_latency (responses onset) in miliseconds
+
+% #0 define outputs
+resample_ufactor=19;
+detect_threhsold=0.95;
+max_patterns_perstimlus = 100;
+
 
 % #1 calculate stimulus permutaions
-stimulus_perms=compute_stimlus_combinations(num_pulse);
+stimulus_perms = compute_stimlus_combinations(num_pulse_);
+stim_perms_streched=imresize(stimulus_perms, [size(stimulus_perms,1), size(stimulus_perms,2)*resample_ufactor], 'box');
 
 % #2 resample
-resample_ufactor=19;
-stim_tmp=stimulus_perms(6,:)
-stim_tmp_us=imresize(stim_tmp,[1,length(stim_tmp)*resample_ufactor],'box');
-
-% #3 find pattern in stimlus trains
-conv(s1,stim_tmp_us)
-s1([1:95]+418-95)
+for i1 = 1 : size(stim_perms_streched, 1)
+    [stimulus_patterns, spike_patterns] = ...
+        extract_subpattern(dataset, stim_perms_streched(i1, :), detect_threhsold, max_patterns_perstimlus )
+end 
 
 
-% #3 extract patterns 
+        
+        
 
 % #4 extract correponding patterns
 
