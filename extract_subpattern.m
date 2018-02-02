@@ -5,7 +5,7 @@ pulse_length = 19;
 num_trials = length(dataset.t);
 stimulus_pattern = cell(num_trials, 2);
 spike_pattern = stimulus_pattern;
-trial_fields = fields(dataset.t)
+trial_fields = fields(dataset.t);
 % 1 : s1, 2 : s2, 3 : n1, 4 : n2
 
 for electrode = [1, 2]
