@@ -16,10 +16,14 @@ max_patterns_perstimlus = 100;
 stimulus_perms = compute_stimlus_combinations(num_pulse_);
 stim_perms_streched=imresize(stimulus_perms, [size(stimulus_perms,1), size(stimulus_perms,2)*resample_ufactor], 'box');
 
+stimulus_patterns = cell(size(stimulus_perms,1));
+spike_patterns = stimulus_patterns;
 % #2 resample
 for i1 = 1 : size(stim_perms_streched, 1)
-    [stimulus_patterns, spike_patterns] = ...
-        extract_subpattern(dataset, stim_perms_streched(i1, :), detect_threhsold, max_patterns_perstimlus )
+    display(['Extracting pattern #', num2str(i1)])
+    [stimulus_patterns{i1}, spike_patterns{i1}] = ...
+        extract_subpattern(dataset, stim_perms_streched(i1, :), detect_threhsold, ...
+            max_patterns_perstimlus, neural_latency, time_window);
 end 
 
 

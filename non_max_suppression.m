@@ -5,7 +5,7 @@ function outmat = non_max_suppression(s_conv_peaks, pulse_length)
 s_conv_peaks_nmx = s_conv_peaks;
 
 while true 
-    display('While loop running')   
+    % display('While loop running')   
     positive_shoulder = diff(s_conv_peaks) > 0;
     positive_trigerred = diff(positive_shoulder) > 0;
     nmx_mask = imdilate(positive_trigerred, ones(1,pulse_length)) - positive_trigerred ;
