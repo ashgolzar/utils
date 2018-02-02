@@ -16,7 +16,7 @@ max_patterns_perstimlus = 100;
 stimulus_perms = compute_stimlus_combinations(num_pulse_);
 stim_perms_streched=imresize(stimulus_perms, [size(stimulus_perms,1), size(stimulus_perms,2)*resample_ufactor], 'box');
 
-stimulus_patterns = cell(size(stimulus_perms,1));
+stimulus_patterns = cell(1,size(stimulus_perms,1));
 spike_patterns = stimulus_patterns;
 % #2 resample
 for i1 = 1 : size(stim_perms_streched, 1)
